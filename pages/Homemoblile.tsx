@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import { useRouter } from 'next/router';
 import {
      Box, Button, ChakraProvider, Text, useMediaQuery, Select, Modal,
-    ModalOverlay,ModalContent,ModalHeader,ModalBody,ModalCloseButton, useDisclosure, Input,Image,useToast
+    ModalOverlay,ModalContent,ModalHeader,ModalBody,ModalCloseButton, useDisclosure, Input,Image,useToast, Spacer
 } from '@chakra-ui/react'
 import {
   useConnect,
@@ -15,7 +15,6 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import contractInterface from '../abi/starportal-abi.json';
 
 import { ethers } from 'ethers';
-import Footer from '../components/Footer'
 import { useState } from 'react'
 import { TriangleDownIcon,RepeatIcon } from '@chakra-ui/icons'
 function Home() {
@@ -115,42 +114,51 @@ function Home() {
     return (
         <ChakraProvider>
           <Box backgroundImage={"/background1.png"} backgroundSize={"cover"}>
-            <Navbar />
+            <Navbar dir="column" />
             <Box marginTop={"1rem"} height={"5rem"} width={"auto"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <Button width={"9rem"} height={"70%"} margin={"auto"} backgroundColor={"whitesmoke"} borderRadius={"3rem"} fontSize={"1.4rem"} fontWeight={"800"}>Sender</Button>
             </Box>
             <Box marginTop={"1%"} height={"70vh"} width={"auto"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <Box height={"90%"} width={ "80%"} backgroundColor={"rgba(115, 115, 115,0.4)"} borderRadius={"2rem"} display={"flex"} justifyContent={"flex-start"} alignItems={"center"} flexDirection={"column"}>
-
-                    <Box margin={"1rem"} height={"60%"} width={"80%"} backgroundColor={"rgba(230, 230, 230,0.1)"} borderRadius={"2rem"} display={"flex"} flexDir={"column"} alignItems={"center"} justifyContent={"center"}>
-                        <Box height={"5%"} width={"90%"} fontWeight={"600"} paddingBottom={"1.5rem"} color={"white"} opacity={"80%"}>From</Box>
-                        <Box height={"20%"} width={"90%"} display={"flex"} flexDir={"row"} justifyContent={"space-between"} alignItems={"center"}>
-                            <Button height={"80%"} width={"10rem"} onClick={() => {setisFromM(true);onOpen();}} backgroundColor={"transparent"}  _hover={{ bg: "rgba(230, 230, 230,0.1)" }}>
+                    <Box margin={"1rem"} height={"80%"} width={"80%"} backgroundColor={"rgba(230, 230, 230,0.1)"} borderRadius={"2rem"} display={"flex"} flexDir={"column"} alignItems={"center"} justifyContent={"center"}>
+                        <Box marginTop={"1rem"} height={"5%"} textAlign={"center"} width={"100%"} fontWeight={"600"} paddingBottom={"0.5rem"} color={"white"} opacity={"80%"}>From</Box>
+                        <Box height={"30%"} width={"90%"} display={"flex"} flexDir={"column"} justifyContent={"center"} alignItems={"center"}>
+                            <Button height={"80%"} width={"100%"} onClick={() => {setisFromM(true);onOpen();}} backgroundColor={"transparent"}  _hover={{ bg: "rgba(230, 230, 230,0.1)" }}>
                                 {/* <Box height={"80%"} width={"3rem"}>{fromcurr.symbol}</Box> */}
+                                <Box display={"flex"}>
+                                <Image marginEnd={"1rem"} height={"1.5rem"} src={networkChaintologo.get(selectedSrcNetwork)}></Image>
                                 <Text flexGrow={1} color={"white"}>{selectedSrcNetwork}</Text>
+                                </Box>
+                                <Spacer />
                                 <TriangleDownIcon color={"white"}/>
                             </Button>
-                            <Input borderColor={"transparent"} flexGrow={1} placeholder={"at least 0.00005"} textAlign={"right"} color={"white"} _placeholder={{ color: 'rgba(256,256,256,0.8)' }} onChange={(e) => {setAmount(e.target.value)}}></Input>
+                            <Input backgroundColor={"rgba(0,0,0,0.2)"} borderColor={"transparent"} width={"auto"} placeholder={"at least 0.00005"} textAlign={"center"} color={"white"} _placeholder={{ color: 'rgba(256,256,256,0.8)' }} onChange={(e) => {setAmount(e.target.value)}}></Input>
                         </Box>
+                        <Spacer/>
                     <Button margin={"0.1rem"} height={"8%"} width={"3rem"} backgroundColor={"transparent"} _hover={{ bg: "transparent" }} onClick={()=>{
                       let a = selectedDstNetwork;
                       setSelectedDstNetwork(selectedSrcNetwork);
                       setSelectedSrcNetwork(a);
-                    }}><RepeatIcon color={"white"}/></Button>
-                                            <Box height={"20%"} width={"90%"} display={"flex"} flexDir={"row"} justifyContent={"space-between"} alignItems={"center"}>
-                            <Button height={"80%"} width={"10rem"} onClick={() => {setisFromM(true);onOpen();}} backgroundColor={"transparent"}  _hover={{ bg: "rgba(230, 230, 230,0.1)" }}>
+                    }}>
+                      <RepeatIcon color={"white"}/></Button>
+                      <Spacer/>
+                        <Box height={"5%"} textAlign={"center"} width={"100%"} fontWeight={"600"} paddingBottom={"0.5rem"} color={"white"} opacity={"80%"}>From</Box>
+                        <Box marginBottom={"1rem"} height={"30%"} width={"90%"} display={"flex"} flexDir={"column"} justifyContent={"center"} alignItems={"center"}>
+                            <Button height={"80%"} width={"100%"} onClick={() => {setisFromM(true);onOpen();}} backgroundColor={"transparent"}  _hover={{ bg: "rgba(230, 230, 230,0.1)" }}>
                                 {/* <Box height={"80%"} width={"3rem"}>{fromcurr.symbol}</Box> */}
+                                <Box display={"flex"}>
+                                <Image marginEnd={"1rem"} height={"1.5rem"} src={networkChaintologo.get(selectedDstNetwork)}></Image>
                                 <Text flexGrow={1} color={"white"}>{selectedDstNetwork}</Text>
+                                </Box>
+                                <Spacer />
                                 <TriangleDownIcon color={"white"}/>
                             </Button>
-                            <Input borderColor={"transparent"} isDisabled={true} _hover={{ borderColor: "transparent" }} flexGrow={1} textAlign={"right"} color={"white"} value={amount}></Input>
+                            <Input width={"auto"} backgroundColor={"rgba(0,0,0,0.2)"} borderColor={"transparent"} isDisabled={true} _hover={{ borderColor: "transparent" }} flexGrow={1} textAlign={"right"} color={"white"} value={amount}></Input>
                         </Box>
                     </Box>
                     <Button isDisabled={!isConnected || (amount==='0')} borderRadius={"3rem"} margin={"1.5rem"} height={"10%"} width={"80%"} backgroundColor={"white"} fontWeight={"800"} fontSize={"1.5rem"} onClick={handleSend}> Send </Button>
                 </Box>
             </Box>
-            <Footer />
-            Home
             <Modal isOpen={isOpen} onClose={onClose} >
         <ModalOverlay />
         <ModalContent>
@@ -166,7 +174,9 @@ function Home() {
                 setSelectedDstNetwork(value);
                 onClose();
               }
-            }}> <Text marginStart={"3rem"}>{value}</Text></Button>))}
+            }}>
+              <Image height={"2rem"} src={networkChaintologo.get(value)}></Image>
+               <Text marginStart={"3rem"}>{value}</Text></Button>))}
           </ModalBody>
         </ModalContent>
       </Modal>

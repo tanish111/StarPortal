@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import { useRouter } from 'next/router';
 import {
      Box, Button, ChakraProvider, Text, useMediaQuery, Select, Modal,
-    ModalOverlay,ModalContent,ModalHeader,ModalBody,ModalCloseButton, useDisclosure, Input,Image,useToast
+    ModalOverlay,ModalContent,ModalHeader,ModalBody,ModalCloseButton, useDisclosure, Input,Image,useToast, Spacer
 } from '@chakra-ui/react'
 import {
   useConnect,
@@ -15,7 +15,6 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import contractInterface from '../abi/starportal-abi.json';
 
 import { ethers } from 'ethers';
-import Footer from '../components/Footer'
 import { useState } from 'react'
 import { TriangleDownIcon,RepeatIcon } from '@chakra-ui/icons'
 function Home() {
@@ -116,12 +115,13 @@ function Home() {
     return (
         <ChakraProvider>
           <Box backgroundImage={"/background1.png"} backgroundSize={"cover"}>
-            <Navbar />
+            <Navbar dir="row"/>
             <Box marginTop={"1rem"} height={"5rem"} width={"auto"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                <Button width={"9rem"} height={"70%"} margin={"auto"} backgroundColor={"whitesmoke"} borderRadius={"3rem"} fontSize={"1.4rem"} fontWeight={"800"}>Sender</Button>
+                <Input width={"auto"} height={"70%"} margin={"auto"} backgroundColor={"whitesmoke"} borderRadius={"3rem"} fontSize={"1.4rem"} fontWeight={"800"} placeholder='What do you want to do?'></Input>
             </Box>
-            <Box marginTop={"1%"} height={"80vh"} width={"auto"} display={"flex"} justifyContent={"center"} alignItems={"center"} >
-                <Box height={"75%"} width={isLargerThan1000 ? "45%" : isLargerThan800 ? "60%" : "80%"} backgroundColor={"rgba(115, 115, 115,0.4)"} borderRadius={"2rem"} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
+            <Text textAlign={"center"} width={"100%"} fontSize={"2rem"} color={"white"} alignSelf={"center"}>OR</Text>
+            <Box height={"80vh"} flexDir={"column"} width={"auto"} display={"flex"} justifyContent={"center"} alignItems={"center"} >
+                <Box marginTop={"1rem"} height={"75%"} width={isLargerThan1000 ? "45%" : isLargerThan800 ? "60%" : "80%"} backgroundColor={"rgba(115, 115, 115,0.4)"} borderRadius={"2rem"} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
                 <Box height={"10%"} width={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <Text fontSize={"1.3rem"} fontWeight={"800"} padding={"1rem"} color={"white"}>Token:</Text>
                 <Box height={"60%"} borderRadius={"5rem"} width={"6rem"} backgroundColor={"black"} display={"flex"} flexDir={"column"} justifyContent={"center"}>
@@ -175,10 +175,10 @@ function Home() {
                       <Text fontSize={"0.8rem"} fontWeight={"400"} color={"#C2C2C2"} textAlign={"right"}>{amount}</Text>
                       </Box>
                     </Box>
-                    <Button isDisabled={!isConnected || (amount==='0')} borderRadius={"3rem"} marginBottom={"1rem"} height={"10%"} width={"20%"}  backgroundColor={"white"} fontWeight={"800"} fontSize={"1.3rem"} onClick={handleSend}> Send </Button>
+                    <Button color={"white"} isDisabled={!isConnected || (amount==='0')} borderRadius={"3rem"} marginBottom={"1rem"} height={"10%"} width={"20%"}  backgroundColor={"black"} fontWeight={"800"} fontSize={"1.3rem"} onClick={handleSend}> Send </Button>
                 </Box>
+                <Spacer/>
             </Box>
-            <Footer />
             <Modal isOpen={isOpen} onClose={onClose} >
         <ModalOverlay />
         <ModalContent>

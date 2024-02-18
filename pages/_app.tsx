@@ -6,6 +6,7 @@ import {
   getDefaultWallets,
   connectorsForWallets,
   wallet,
+  darkTheme,
   ConnectButton,
 } from '@rainbow-me/rainbowkit';
 // import { useBalance } from 'wagmi/hooks';
@@ -140,7 +141,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 const [amount,setAmount] = useState("0");
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider appInfo={demoAppInfo} chains={chains}>
+      <RainbowKitProvider coolMode theme={darkTheme()} appInfo={demoAppInfo} chains={chains}>
         <Component {...pageProps} />
       </RainbowKitProvider>
     </WagmiConfig>
