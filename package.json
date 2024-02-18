@@ -1,0 +1,33 @@
+{
+  "name": "with-next-mint-nft",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-icons/cryptocurrency-icons": "^1.1.1",
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@rainbow-me/rainbowkit": "0.2.0",
+    "cryptocurrency-icons": "^0.18.1",
+    "ethers": "^5.6.1",
+    "framer-motion": "^11.0.5",
+    "next": "12.1.6",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "wagmi": "^0.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.32",
+    "@types/react": "^18.0.9",
+    "eslint": "8.15.0",
+    "eslint-config-next": "12.1.6",
+    "typescript": "4.6.4"
+  }
+}
