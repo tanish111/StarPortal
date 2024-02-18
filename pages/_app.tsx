@@ -1,6 +1,6 @@
-import './global.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
+import DataProvider from "../components/provider/DataProvider"
 import {
   RainbowKitProvider,
   getDefaultWallets,
@@ -11,7 +11,6 @@ import {
 } from '@rainbow-me/rainbowkit';
 // import { useBalance } from 'wagmi/hooks';
 
-import './css/TokenTransactionPage.module.css'; // Make sure to create the corresponding CSS file
 import { chain, createClient, configureChains, WagmiConfig, defaultChains } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
@@ -142,7 +141,9 @@ const [amount,setAmount] = useState("0");
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider coolMode theme={darkTheme()} appInfo={demoAppInfo} chains={chains}>
+        <DataProvider>
         <Component {...pageProps} />
+        </DataProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );

@@ -68,7 +68,8 @@ const TransmissionPage: React.FC = () => {
             <Image height={"70%"} src={networkChaintologo.get(from)}></Image>
           </Box>
           <Box marginStart={"20%"} height={"15%"} width={"50%"}  alignSelf={"center"} backgroundColor={"rgba(0,0,0,0.35)"} marginBottom={"0.5rem"} borderRadius={"3rem"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-          <Text fontSize={isLargerThan600 ? "1rem" : "0.6rem"} width={"95%"} textAlign={"center"} color={"white"} textDecoration={"underline"}><a href={"https://sepolia.etherscan.io/tx/" + TxHash}>Txn Hash</a>{amtSrc=="0" ? <TimeIcon color={"yellow"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/> : <CheckCircleIcon color={"green"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/>}</Text>
+          <Text fontSize={isLargerThan600 ? "1rem" : "0.6rem"} width={"95%"} textAlign={"center"} color={"white"} textDecoration={"underline"} onClick={()=>{
+            window.open("https://sepolia.etherscan.io/tx/" + TxHash)}} ><a>Txn Hash</a>{amtSrc=="0" ? <TimeIcon color={"yellow"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/> : <CheckCircleIcon color={"green"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/>}</Text>
           </Box>
         </Box>
         <Box width={"30%"} height={"30%"}  display={"flex"} alignItems={"center"} justifyContent={"center"}>
@@ -86,12 +87,14 @@ const TransmissionPage: React.FC = () => {
           <Image height={"70%"} src={networkChaintologo.get(to)}></Image>
           </Box>
           <Box marginEnd={"20%"} height={"15%"} width={"50%"}  alignSelf={"center"} backgroundColor={"rgba(0,0,0,0.35)"} marginBottom={"0.5rem"} borderRadius={"3rem"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-          <Text fontSize={isLargerThan600 ? "1rem" : "0.6rem"} width={"95%"} textAlign={"center"} color={"white"} textDecoration={"underline"}><a href={"https://sepolia.etherscan.io/tx/" + TxHash}>Txn Hash</a>{amtSrc!="2" ? <TimeIcon color={"yellow"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/> : <CheckCircleIcon color={"green"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/>}</Text>
+          <Text fontSize={isLargerThan600 ? "1rem" : "0.6rem"} width={"95%"} textAlign={"center"} color={"white"} textDecoration={"underline"} onClick={()=>{
+            window.open("https://sepolia.etherscan.io/tx/" + TxHash)
+          }}><a>Txn Hash</a>{amtSrc!="2" ? <TimeIcon color={"yellow"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/> : <CheckCircleIcon color={"green"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/>}</Text>
           </Box>
         </Box> 
         </Box>
         <Button margin="0.5rem" width={"auto"} height={"2rem"} backgroundColor={"rgba(0,0,0,0.5)"} color={"white"} _hover={{ bg: "rgba(0,0,0,0.7)"}} onClick={() => {
-          router.push('/Home')
+          router.push('/')
         }}>Home</Button> 
       </Box>
     </Box>
