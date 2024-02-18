@@ -73,7 +73,7 @@ const TransmissionPage: React.FC = () => {
         </Box>
         <Box width={"30%"} height={"30%"}  display={"flex"} alignItems={"center"} justifyContent={"center"}>
         {(amtSrc=="-1") ? <CloseIcon height={"50%"} width={"50%"} color={"red"}/> : 
-          <Image src={amtSrc!="2" ? "/run.png" : "/bridge.png"} backgroundColor={"tranparent"}></Image>
+          <Image src={amtSrc!="2" ? "/run.gif" : "/bridge.png"} backgroundColor={"tranparent"}></Image>
   }
         </Box>
         <Box height={"80%"} width={"35%"} margin={"0.5rem"}  display={"flex"} flexDir={"column"} justifyContent={"space-between"}>
