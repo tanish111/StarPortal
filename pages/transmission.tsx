@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Box,ChakraProvider,Image,Text,useMediaQuery,useToast } from '@chakra-ui/react'
+import { Box,ChakraProvider,Image,Text,useMediaQuery,useToast,Button } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons';
 import Navbar from '../components/Navbar'
 import { TimeIcon,CheckCircleIcon } from '@chakra-ui/icons';
+import { color } from 'framer-motion';
 const TransmissionPage: React.FC = () => {
   const router = useRouter();
   const [TxHash, setTxHash] = useState('');
@@ -46,7 +47,6 @@ const TransmissionPage: React.FC = () => {
       }
     })();
   }, [router.query]);
-
   return (
     <ChakraProvider>
     <Box backgroundSize={"cover"} height={"100vh"} width={"100vw"} backgroundImage={amtSrc=="2" ? "/background3.png" : "/background2.png"}>
@@ -88,8 +88,11 @@ const TransmissionPage: React.FC = () => {
           <Box marginEnd={"20%"} height={"15%"} width={"50%"}  alignSelf={"center"} backgroundColor={"rgba(0,0,0,0.35)"} marginBottom={"0.5rem"} borderRadius={"3rem"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
           <Text fontSize={isLargerThan600 ? "1rem" : "0.6rem"} width={"95%"} textAlign={"center"} color={"white"} textDecoration={"underline"}><a href={"https://sepolia.etherscan.io/tx/" + TxHash}>Txn Hash</a>{amtSrc!="2" ? <TimeIcon color={"yellow"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/> : <CheckCircleIcon color={"green"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/>}</Text>
           </Box>
-        </Box>  
+        </Box> 
         </Box>
+        <Button margin="0.5rem" width={"auto"} height={"2rem"} backgroundColor={"rgba(0,0,0,0.5)"} color={"white"} _hover={{ bg: "rgba(0,0,0,0.7)"}} onClick={() => {
+          router.push('/Home')
+        }}>Home</Button> 
       </Box>
     </Box>
     </Box>
