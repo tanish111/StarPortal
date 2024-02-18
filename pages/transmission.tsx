@@ -49,7 +49,7 @@ const TransmissionPage: React.FC = () => {
 
   return (
     <ChakraProvider>
-    <Box backgroundSize={"cover"} height={"100vh"} width={"100vw"} backgroundImage={"/background2.png"}>
+    <Box backgroundSize={"cover"} height={"100vh"} width={"100vw"} backgroundImage={amtSrc=="2" ? "/background3.png" : "/background2.png"}>
     <Navbar />
     <Box marginTop={"1%"} height={"80vh"} width={"auto"} display={"flex"} justifyContent={"center"} alignItems={"center"} >
     <Box height={"85%"} width={isLargerThan600 ? (isLargerThan800 ? (!isLargerThan1000 ? "60%" : "45%") : "75%") : "95%"} backgroundColor={"rgba(91,91,91,0.6)"} borderRadius={"2rem"} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
