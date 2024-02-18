@@ -81,21 +81,16 @@ function Home() {
           router.push(`/transmission?TxHash=${depositDataEthSepolia}&amount=${amount}&amtSrc=1&from=${selectedSrcNetwork}&to=${selectedDstNetwork}`);
          }).catch((e) => {
           console.log(e);
-          // toast({
-          //   title: 'Transaction failed please try again',
-          //   status: 'error',
-          //   isClosable: true,
-          // })
           router.push('/Home');
          });
          console.log(depositDataEthSepolia);
     } else if (selectedSrcNetwork == 'arb_sepolia') {
 
       router.push(`/transmission?TxHash=${depositDataEthSepolia}&amount=${amount}&amtSrc=0&from=${selectedSrcNetwork}&to=${selectedDstNetwork}`);
-      await depositEthSepolia({args : [networkToChainIdMap[selectedDstNetwork as keyof typeof networkToChainIdMap]],
+      await depositArbSepolia({args : [networkToChainIdMap[selectedDstNetwork as keyof typeof networkToChainIdMap]],
          overrides: { value: ethers.utils.parseEther(amount)
          }, }).then((e)=>{
-          router.push(`/transmission?srcTxHash=24244242&dstTxHash=9832038&amount=${amount}&amtSrc=1&from=${selectedSrcNetwork}&to=${selectedDstNetwork}`);
+          router.push(`/transmission?TxHash=${depositDataEthSepolia}&amount=${amount}&amtSrc=1&from=${selectedSrcNetwork}&to=${selectedDstNetwork}`);
          }).catch((e) => {
           console.log(e);
          });

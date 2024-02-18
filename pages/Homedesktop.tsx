@@ -17,9 +17,11 @@ import contractInterface from '../abi/starportal-abi.json';
 import { ethers } from 'ethers';
 import { useState } from 'react'
 import { TriangleDownIcon,RepeatIcon } from '@chakra-ui/icons'
+
 function Home() {
   const router = useRouter();
   const [amount, setAmount] = useState('0'); // Amount to send
+  const [sendHash,SetsendHash] = useState('');
   const { isConnected } = useConnect();
 
   const contractConfigEthSepolia = {
@@ -68,7 +70,6 @@ function Home() {
     ["Optimism","/logo_Optimism.png"],
     ["Polygon","/logo_Polygon.png"]])
  const networks = Object.keys(networkToContractAddressMap); // Predefined list of networks\
-
  const [selectedSrcNetwork, setSelectedSrcNetwork] = useState(networks[0]); // Default Source network
  const [selectedDstNetwork, setSelectedDstNetwork] = useState(networks[1]); // Default Destination network
   const handleSend = async () => {
@@ -77,30 +78,24 @@ function Home() {
       await depositEthSepolia({args : [networkToChainIdMap[selectedDstNetwork as keyof typeof networkToChainIdMap]],
          overrides: { value: ethers.utils.parseEther(amount)
          }, }).then((e)=>{
-          console.log(e.hash);
-          router.push(`/transmission?TxHash=${depositDataEthSepolia}&amount=${amount}&amtSrc=1&from=${selectedSrcNetwork}&to=${selectedDstNetwork}`);
+          SetsendHash(e.hash);
+          router.push(`/transmission?TxHash=${e.hash}&amount=${amount}&amtSrc=1&from=${selectedSrcNetwork}&to=${selectedDstNetwork}`);
          }).catch((e) => {
           console.log(e);
-          // toast({
-          //   title: 'Transaction failed please try again',
-          //   status: 'error',
-          //   isClosable: true,
-          // })
-          router.push('/Home');
+          router.push(`/transmission?TxHash=${e.hash}&amount=${amount}&amtSrc=-1&from=${selectedSrcNetwork}&to=${selectedDstNetwork}`);
          });
-         console.log(depositDataEthSepolia);
     } else if (selectedSrcNetwork == 'arb_sepolia') {
-
       router.push(`/transmission?TxHash=${depositDataEthSepolia}&amount=${amount}&amtSrc=0&from=${selectedSrcNetwork}&to=${selectedDstNetwork}`);
-      await depositEthSepolia({args : [networkToChainIdMap[selectedDstNetwork as keyof typeof networkToChainIdMap]],
+      await depositArbSepolia({args : [networkToChainIdMap[selectedDstNetwork as keyof typeof networkToChainIdMap]],
          overrides: { value: ethers.utils.parseEther(amount)
          }, }).then((e)=>{
           console.log(e);
-          router.push(`/transmission?srcTxHash=24244242&dstTxHash=9832038&amount=${amount}&amtSrc=1&from=${selectedSrcNetwork}&to=${selectedDstNetwork}`);
+      router.push(`/transmission?TxHash=${depositDataEthSepolia}&amount=${amount}&amtSrc=0&from=${selectedSrcNetwork}&to=${selectedDstNetwork}`);
          }).catch((e) => {
           console.log(e);
+          router.push(`/transmission?TxHash=${e.hash}&amount=${amount}&amtSrc=-1&from=${selectedSrcNetwork}&to=${selectedDstNetwork}`);
          });
-         console.log(depositDataArbSepolia);    } else {
+   } else {
       // Handle other networks if needed
       console.log('Selected source network not supported');
     }

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Box,ChakraProvider,Image,Text,useMediaQuery,useToast } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons';
 import Navbar from '../components/Navbar'
-
+import { TimeIcon,CheckCircleIcon } from '@chakra-ui/icons';
 const TransmissionPage: React.FC = () => {
   const router = useRouter();
   const [TxHash, setTxHash] = useState('');
@@ -15,7 +15,6 @@ const TransmissionPage: React.FC = () => {
   const [isLargerThan800] = useMediaQuery('(min-width: 800px)');
   const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
   const toast = useToast();
-console.log(TxHash)
   const networkChaintologo = new Map([
     ["eth_sepolia","/logo_eth_sepolia.png"],
     ["arb_sepolia","/logo_arb_sepolia.png"],
@@ -23,6 +22,7 @@ console.log(TxHash)
     ["Goerli","/logo_Goerli.png"],
     ["Optimism","/logo_Optimism.png"],
     ["Polygon","/logo_Polygon.png"]])
+    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
   useEffect(() => {
     const { TxHash,amount,amtSrc,to,from } = router.query;
     if (TxHash) {
@@ -32,14 +32,19 @@ console.log(TxHash)
       setFrom(from);
       setTo(to);
     }
-    if(amtSrc=="-1"){
-      toast({
-        title: `Transaction Failed`,
-        status: 'error',
-        isClosable: true,
-      })
-    }
-    console.log(amtSrc)
+    (async () => {
+      if(amtSrc=="-1"){
+        toast({
+          title: `Transaction Failed`,
+          status: 'error',
+          isClosable: true,
+        })
+      }else if(amtSrc=="1"){
+        await sleep(10000);
+        setamtSrc("2");
+        console.log("OK.")
+      }
+    })();
   }, [router.query]);
 
   return (
@@ -49,7 +54,7 @@ console.log(TxHash)
     <Box marginTop={"1%"} height={"80vh"} width={"auto"} display={"flex"} justifyContent={"center"} alignItems={"center"} >
     <Box height={"85%"} width={isLargerThan600 ? (isLargerThan800 ? (!isLargerThan1000 ? "60%" : "45%") : "75%") : "95%"} backgroundColor={"rgba(91,91,91,0.6)"} borderRadius={"2rem"} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
       <Box height={"6rem"} color={"white"} margin={"0.5rem"} backgroundColor={"rgba(0,0,0,0.3)"} width={"auto"} borderRadius={"1rem"} display={"flex"} alignItems={"center"} justifyContent={"center"} flexDir={"column"}>
-        <Text fontSize={isLargerThan600 ? "1.5rem" : "1rem"} fontWeight={"800"}>{amtSrc!="-1" ? (amtSrc=="1" ? "Transaction Successfull" : "In Progress ...") : "Transaction Failed"}</Text>
+        <Text paddingStart={"2rem"} paddingEnd={"2rem"} fontSize={isLargerThan600 ? "1.5rem" : "1rem"} fontWeight={"800"}>{amtSrc!="-1" ? (amtSrc=="2" ? "Processed ✅" : "In Progress ...") : "Transaction Failed"}</Text>
         <Text fontSize={isLargerThan600 ? "1rem" : "0.75rem"} fontWeight={"800"}>Amount: {amount} ETH</Text>
       </Box>
       <Box flexGrow={1} margin={"1.5rem"} width={"95%"} display={"flex"} flexDir={"row"} justifyContent={"space-between"} alignItems={"center"}>
@@ -59,16 +64,16 @@ console.log(TxHash)
             {from}
             </Text>
           </Box>
-          <Box display={"flex"} alignItems={"center"} justifyContent={"center"} width={"80%"} height={"70%"}  borderWidth={"0.8rem"} borderColor={"green"} borderRadius={"50%"} margin={"0.1rem"} marginTop={"1rem"} alignSelf={"end"} marginBottom={"1rem"}>
+          <Box display={"flex"} alignItems={"center"} justifyContent={"center"} width={"80%"} height={"70%"}  borderWidth={"0.8rem"} borderColor={amtSrc=="-1" ? "red" :((amtSrc=='0') ? "yellow" : "green")} borderRadius={"50%"} margin={"0.1rem"} marginTop={"1rem"} alignSelf={"end"} marginBottom={"1rem"}>
             <Image height={"70%"} src={networkChaintologo.get(from)}></Image>
           </Box>
-          <Box marginStart={"20%"} height={"15%"} width={"50%"}  alignSelf={"center"} backgroundColor={"rgba(0,0,0,0.35)"} marginBottom={"0.5rem"} borderRadius={"3rem"}>
-          <Text fontSize={isLargerThan600 ? "1rem" : "0.6rem"} width={"95%"} textAlign={"center"} color={"white"}>Txn Hash...</Text>
+          <Box marginStart={"20%"} height={"15%"} width={"50%"}  alignSelf={"center"} backgroundColor={"rgba(0,0,0,0.35)"} marginBottom={"0.5rem"} borderRadius={"3rem"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+          <Text fontSize={isLargerThan600 ? "1rem" : "0.6rem"} width={"95%"} textAlign={"center"} color={"white"} textDecoration={"underline"}><a href={"https://sepolia.etherscan.io/tx/" + TxHash}>Txn Hash</a>{amtSrc=="0" ? <TimeIcon color={"yellow"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/> : <CheckCircleIcon color={"green"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/>}</Text>
           </Box>
         </Box>
         <Box width={"30%"} height={"30%"}  display={"flex"} alignItems={"center"} justifyContent={"center"}>
         {(amtSrc=="-1") ? <CloseIcon height={"50%"} width={"50%"} color={"red"}/> : 
-          <Image src={amtSrc=="0" ? "/run.png" : "/bridge.png"} backgroundColor={"tranparent"}></Image>
+          <Image src={amtSrc!="2" ? "/run.png" : "/bridge.png"} backgroundColor={"tranparent"}></Image>
   }
         </Box>
         <Box height={"80%"} width={"35%"} margin={"0.5rem"}  display={"flex"} flexDir={"column"} justifyContent={"space-between"}>
@@ -77,11 +82,11 @@ console.log(TxHash)
             {to}
             </Text>
           </Box>
-          <Box display={"flex"} alignItems={"center"} justifyContent={"center"} borderWidth={"0.8rem"} borderColor={(amtSrc==='0') ? "yellow" : "green"} width={"80%"} height={"70%"} borderRadius={"50%"} margin={"0.1rem"} marginTop={"1rem"} alignSelf={"start"} marginBottom={"1rem"}>
+          <Box display={"flex"} alignItems={"center"} justifyContent={"center"} borderWidth={"0.8rem"} borderColor={amtSrc=="-1" ? "red" :((amtSrc!='2') ? "yellow" : "green")} width={"80%"} height={"70%"} borderRadius={"50%"} margin={"0.1rem"} marginTop={"1rem"} alignSelf={"start"} marginBottom={"1rem"}>
           <Image height={"70%"} src={networkChaintologo.get(to)}></Image>
           </Box>
-          <Box marginEnd={"20%"} height={"15%"} width={"50%"} backgroundColor={"rgba(0,0,0,0.35)"} alignSelf={"center"} marginBottom={"0.5rem"} borderRadius={"3rem"}>
-            <Text fontSize={isLargerThan600 ? "1rem" : "0.6rem"} width={"95%"} textAlign={"center"} color={"white"}>Txn Hash...</Text>
+          <Box marginEnd={"20%"} height={"15%"} width={"50%"}  alignSelf={"center"} backgroundColor={"rgba(0,0,0,0.35)"} marginBottom={"0.5rem"} borderRadius={"3rem"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+          <Text fontSize={isLargerThan600 ? "1rem" : "0.6rem"} width={"95%"} textAlign={"center"} color={"white"} textDecoration={"underline"}><a href={"https://sepolia.etherscan.io/tx/" + TxHash}>Txn Hash</a>{amtSrc!="2" ? <TimeIcon color={"yellow"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/> : <CheckCircleIcon color={"green"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"}/>}</Text>
           </Box>
         </Box>  
         </Box>
