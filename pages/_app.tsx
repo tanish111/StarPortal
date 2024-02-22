@@ -7,12 +7,12 @@ import {
   connectorsForWallets,
   wallet,
   darkTheme,
-  ConnectButton,
+  ConnectButton
   
 } from '@rainbow-me/rainbowkit';
 // import { useBalance } from 'wagmi/hooks';
 
-import { chain, createClient, configureChains, WagmiConfig, defaultChains } from 'wagmi';
+import { chain, createClient, configureChains, WagmiConfig,Chain } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 
@@ -24,7 +24,6 @@ import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 import { useState } from "react";
 import App from 'next/app';
 
-// Defining all the chains 
 const customChains = [
   {
     id: 11155111,
@@ -49,7 +48,6 @@ const customChains = [
 ]
 
 const infuraId = '2d3b60309d864e05862147e530243ec6';
-
 const { chains, provider, webSocketProvider } = configureChains(customChains, [
   jsonRpcProvider({
     rpc: (chain) => ({
@@ -62,7 +60,6 @@ const { chains, provider, webSocketProvider } = configureChains(customChains, [
   publicProvider(),
 ]
 )
-
 // const { chains, provider } = configureChains(customChains, [
 //   jsonRpcProvider({
 //     url: 'https://sepolia.infura.io/v3', // This URL is required for the Ethereum Sepolia Testnet
