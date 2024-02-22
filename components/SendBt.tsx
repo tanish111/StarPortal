@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router';
 import { useDataListContext } from '../components/provider/DataProvider'
-import { Button } from '@chakra-ui/react';
+import { Button, Switch } from '@chakra-ui/react';
 import {
     useConnect,
     useContractRead,
-    useContractWrite,
-    useWaitForTransaction
+    useContractWrite
   } from 'wagmi';
 import { switchNetwork } from '@wagmi/core'
 import { ethers } from 'ethers';
@@ -31,6 +30,7 @@ async function getChainId() {
   }
 }
 function SendBt() {
+  
     const data = useDataListContext();
     const { isConnected } = useConnect();
     const [sendHash,SetsendHash] = useState('');
@@ -47,7 +47,8 @@ function SendBt() {
         isSuccess: isDepositStarted, 
       } = useContractWrite(contractConfig, 'deposit');
       const handleSend = async () => {
-        const c = getChainId();
+        const c = await getChainId();
+        console.log(c,chaintoID[data.selectedSrcNetwork])
         if (c == chaintoID[data.selectedSrcNetwork]) {
           router.push(`/transmission?TxHash=${depositData}&data.amount=${data.amount}&amtSrc=0&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
           await deposit({args : [networkToChainIdMap[data.selectedDstNetwork as keyof typeof networkToChainIdMap]],
@@ -63,7 +64,7 @@ function SendBt() {
        else {
           // Handle other networks if needed
           const network = await switchNetwork({
-            chainId: 11155111,
+            chainId: chaintoID[data.selectedSrcNetwork]
           }).catch((e)=>{
             console.log(e)
             window.alert("Chain not added to wallet")
