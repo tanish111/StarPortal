@@ -6,8 +6,9 @@ import {
     useConnect,
     useContractRead,
     useContractWrite,
-    useWaitForTransaction,
+    useWaitForTransaction
   } from 'wagmi';
+import { switchNetwork } from '@wagmi/core'
 import { ethers } from 'ethers';
 import {networkToContractAddressMap,networkToChainIdMap,networkChaintologo} from "../GlobalConts/global"
 import Customconnect from './Customconnect';
@@ -61,7 +62,13 @@ function SendBt() {
        } 
        else {
           // Handle other networks if needed
-          console.log('Wrong Chain');
+          const network = await switchNetwork({
+            chainId: 11155111,
+          }).catch((e)=>{
+            console.log(e)
+            window.alert("Chain not added to wallet")
+          })
+          console.log('Chain Mismatch');
         }
       };
   return (
