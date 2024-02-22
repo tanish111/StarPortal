@@ -22,8 +22,8 @@ function Home() {
         <ChakraProvider>
           <Box backgroundImage={"/background1.png"} backgroundSize={"cover"}>
             <Navbar dir="column" />
-            <Box marginTop={"1rem"} height={"5rem"} width={"auto"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                <Button width={"9rem"} height={"70%"} margin={"auto"} backgroundColor={"whitesmoke"} borderRadius={"3rem"} fontSize={"1.4rem"} fontWeight={"800"}>Sender</Button>
+            <Box marginTop={"1rem"} height={"3rem"} width={"auto"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                <Input width={"auto"} height={"70%"} margin={"auto"} backgroundColor={"whitesmoke"} borderRadius={"3rem"} fontSize={"1rem"} fontWeight={"800"} placeholder='What do you want to do?'></Input>
             </Box>
             <Box marginTop={"1%"} height={"70vh"} width={"auto"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <Box height={"90%"} width={ "80%"} backgroundColor={"rgba(115, 115, 115,0.4)"} borderRadius={"2rem"} display={"flex"} justifyContent={"flex-start"} alignItems={"center"} flexDirection={"column"}>
