@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import { useRouter } from 'next/router';
 import SendBt from '../components/SendBt';
+import { useAccount } from 'wagmi'
 import { useDataListContext } from '../components/provider/DataProvider'
 import {networkToContractAddressMap,networkChaintologo} from "../GlobalConts/global"
 import {

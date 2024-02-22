@@ -9,30 +9,47 @@ import {
     useWaitForTransaction,
   } from 'wagmi';
 import { ethers } from 'ethers';
-import {contractConfigEthSepolia,networkToContractAddressMap,networkToChainIdMap,networkChaintologo,contractConfigArbSepolia} from "../GlobalConts/global"
+import {networkToContractAddressMap,networkToChainIdMap,networkChaintologo} from "../GlobalConts/global"
 import Customconnect from './Customconnect';
+import contractInterface from '../abi/starportal-abi.json';
+const chaintoID =  {
+    eth_sepolia: 11155111,
+    arb_sepolia: 421614,
+    Goerli: 5,
+    Optimism: 10,
+    Polygon: 137,
+} 
+async function getChainId() {
+  try {
+    const chainId = Number(await window.ethereum.request({ method: "eth_chainId" }));
+    const network = ethers.providers.getNetwork(chainId);
+    console.log(`Network name: ${network.name}, id:${network.chainId}`);
+    return network.chainId;
+  } catch (error) {
+    console.log(error);
+  }
+}
 function SendBt() {
     const data = useDataListContext();
     const { isConnected } = useConnect();
     const [sendHash,SetsendHash] = useState('');
     const router = useRouter();
     const networks = Object.keys(networkToContractAddressMap); // Predefined list of networks\
+    const contractConfig = {
+      addressOrName: networkToContractAddressMap[data.selectedSrcNetwork],
+      contractInterface: contractInterface,
+    };
     const {
-        data: depositDataEthSepolia,
-        writeAsync: depositEthSepolia,
-        isLoading: isDepositLoadingEthSepolia,
-        isSuccess: isDepositStartedEthSepolia, 
-      } = useContractWrite(contractConfigEthSepolia, 'deposit');
-       const {
-        data: depositDataArbSepolia,
-        writeAsync: depositArbSepolia,
-        isLoading: isDepositLoadingArbSepolia,
-        isSuccess: isDepositStartedArbSepolia,
-      } = useContractWrite(contractConfigArbSepolia, 'deposit');
+        data: depositData,
+        writeAsync: deposit,
+        isLoading: isDepositLoading,
+        isSuccess: isDepositStarted, 
+      } = useContractWrite(contractConfig, 'deposit');
       const handleSend = async () => {
-        if (data.selectedSrcNetwork == 'eth_sepolia') {
-          router.push(`/transmission?TxHash=${depositDataArbSepolia}&data.amount=${data.amount}&amtSrc=0&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
-          await depositEthSepolia({args : [networkToChainIdMap[data.selectedDstNetwork as keyof typeof networkToChainIdMap]],
+        const c = getChainId();
+        if (c == chaintoID[data.selectedSrcNetwork]) {
+          router.push(`/transmission?TxHash=${depositData}&data.amount=${data.amount}&amtSrc=0&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
+          await deposit({args : [networkToChainIdMap[data.selectedDstNetwork as keyof typeof networkToChainIdMap]],
              overrides: { value: ethers.utils.parseEther(data.amount)
              }, }).then((e)=>{
               SetsendHash(e.hash);
@@ -41,20 +58,10 @@ function SendBt() {
               console.log(e);
               router.push(`/transmission?TxHash=${e.hash}&data.amount=${data.amount}&amtSrc=-1&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
              });
-        } else if (data.selectedSrcNetwork == 'arb_sepolia') {
-          router.push(`/transmission?TxHash=${depositDataEthSepolia}&data.amount=${data.amount}&amtSrc=0&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
-          await depositArbSepolia({args : [networkToChainIdMap[data.selectedDstNetwork as keyof typeof networkToChainIdMap]],
-             overrides: { value: ethers.utils.parseEther(data.amount)
-             }, }).then((e)=>{
-              console.log(e);
-          router.push(`/transmission?TxHash=${depositDataEthSepolia}&data.amount=${data.amount}&amtSrc=0&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
-             }).catch((e) => {
-              console.log(e);
-              router.push(`/transmission?TxHash=${e.hash}&data.amount=${data.amount}&amtSrc=-1&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
-             });
-       } else {
+       } 
+       else {
           // Handle other networks if needed
-          console.log('Selected source network not supported');
+          console.log('Wrong Chain');
         }
       };
   return (
