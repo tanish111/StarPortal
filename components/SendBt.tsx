@@ -9,16 +9,9 @@ import {
   } from 'wagmi';
 import { switchNetwork } from '@wagmi/core'
 import { ethers } from 'ethers';
-import {networkToContractAddressMap,networkToChainIdMap,networkChaintologo} from "../GlobalConts/global"
+import {networkToContractAddressMap,networkToChainIdMap,networkChaintologo,chaintoID} from "../GlobalConts/global"
 import Customconnect from './Customconnect';
 import contractInterface from '../abi/starportal-abi.json';
-const chaintoID =  {
-    eth_sepolia: 11155111,
-    arb_sepolia: 421614,
-    Goerli: 5,
-    Optimism: 10,
-    Polygon: 137,
-} 
 async function getChainId() {
   try {
     const chainId = Number(await window.ethereum.request({ method: "eth_chainId" }));
@@ -57,7 +50,7 @@ function SendBt() {
               SetsendHash(e.hash);
               router.push(`/transmission?TxHash=${e.hash}&amount=${data.amount}&amtSrc=1&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
              }).catch((e) => {
-              console.log(e);
+              window.alert(e.data.message);
               router.push(`/transmission?TxHash=${e.hash}&amount=${data.amount}&amtSrc=-1&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
              });
        } 

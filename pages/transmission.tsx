@@ -5,6 +5,7 @@ import { CloseIcon } from '@chakra-ui/icons';
 import Navbar from '../components/Navbar'
 import { TimeIcon, CheckCircleIcon, ArrowBackIcon } from '@chakra-ui/icons';
 import { color } from 'framer-motion';
+import { networkChaintologo,verifyBaseURL } from '../GlobalConts/global';
 const TransmissionPage: React.FC = () => {
   const router = useRouter();
   const [TxHash, setTxHash] = useState('');
@@ -16,13 +17,6 @@ const TransmissionPage: React.FC = () => {
   const [isLargerThan800] = useMediaQuery('(min-width: 800px)');
   const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
   const toast = useToast();
-  const networkChaintologo = new Map([
-    ["eth_sepolia", "/logo_eth_sepolia.png"],
-    ["arb_sepolia", "/logo_arb_sepolia.png"],
-    ["Rinkeby", "/logo_Rinkeby.png"],
-    ["Goerli", "/logo_Goerli.png"],
-    ["Optimism", "/logo_Optimism.png"],
-    ["Polygon", "/logo_Polygon.png"]])
   const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
   useEffect(() => {
     const { TxHash, amount, amtSrc, to, from } = router.query;
@@ -74,7 +68,7 @@ const TransmissionPage: React.FC = () => {
                 </Box>
                 <Box marginStart={"20%"} height={"15%"} width={"50%"} alignSelf={"center"} backgroundColor={"rgba(0,0,0,0.35)"} marginBottom={"0.5rem"} borderRadius={"3rem"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                   <Text fontSize={isLargerThan600 ? "1rem" : "0.6rem"} width={"95%"} textAlign={"center"} color={"white"} textDecoration={"underline"} onClick={() => {
-                    window.open("https://sepolia.etherscan.io/tx/" + TxHash)
+                    window.open(verifyBaseURL[from] + TxHash)
                   }} ><a>Txn Hash</a>{amtSrc == "0" ? <TimeIcon color={"yellow"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"} /> : <CheckCircleIcon color={"green"} height={isLargerThan600 ? "1rem" : "0.6rem"} paddingStart={"0.3rem"} />}</Text>
                 </Box>
               </Box>

@@ -28,5 +28,15 @@ const contractConfigArbSepolia = {
     ["Goerli","/logo_Goerli.png"],
     ["Optimism","/logo_Optimism.png"],
     ["Polygon","/logo_Polygon.png"]])
-
-module.exports = {contractConfigEthSepolia,contractConfigArbSepolia,networkToContractAddressMap,networkToChainIdMap,networkChaintologo}
+export const chaintoID =  {
+      eth_sepolia: 11155111,
+      arb_sepolia: 421614,
+      Goerli: 5,
+      Optimism: 10,
+      Polygon: 137,
+  } 
+  export const verifyBaseURL = {
+    arb_sepolia:"https://sepolia.arbiscan.io/tx/",
+    eth_sepolia:"https://sepolia.etherscan.io/tx/"
+  }
+module.exports = {contractConfigEthSepolia,contractConfigArbSepolia,networkToContractAddressMap,networkToChainIdMap,networkChaintologo,chaintoID,verifyBaseURL}
