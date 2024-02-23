@@ -14,6 +14,7 @@ import { TriangleDownIcon,RepeatIcon } from '@chakra-ui/icons'
 import Selectmodal from '../components/Selectmodal';
 
 function Home() {
+    
   const data = useDataListContext();
   const networks = Object.keys(networkToContractAddressMap); // Predefined list of networks\
     // single media query with no options
@@ -25,7 +26,7 @@ function Home() {
     const [isFromM,setisFromM]=useState(true);
     return (
         <ChakraProvider>
-          <Box backgroundImage={"/background1.png"} backgroundSize={"cover"}>
+          <Box backgroundImage={"/background1.png"} backgroundSize={"cover"} overflow={"hidden"}>
             <Navbar dir="row"/>
             <Box marginTop={"1rem"} height={"5rem"} width={"auto"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <Input width={"auto"} height={"70%"} margin={"auto"} backgroundColor={"whitesmoke"} borderRadius={"3rem"} fontSize={"1.4rem"} fontWeight={"800"} placeholder='What do you want to do?'></Input>

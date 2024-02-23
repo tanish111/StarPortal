@@ -50,15 +50,15 @@ function SendBt() {
         const c = await getChainId();
         console.log(c,chaintoID[data.selectedSrcNetwork])
         if (c == chaintoID[data.selectedSrcNetwork]) {
-          router.push(`/transmission?TxHash=${depositData}&data.amount=${data.amount}&amtSrc=0&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
+          router.push(`/transmission?TxHash=${depositData}&amount=${data.amount}&amtSrc=0&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
           await deposit({args : [networkToChainIdMap[data.selectedDstNetwork as keyof typeof networkToChainIdMap]],
              overrides: { value: ethers.utils.parseEther(data.amount)
              }, }).then((e)=>{
               SetsendHash(e.hash);
-              router.push(`/transmission?TxHash=${e.hash}&data.amount=${data.amount}&amtSrc=1&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
+              router.push(`/transmission?TxHash=${e.hash}&amount=${data.amount}&amtSrc=1&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
              }).catch((e) => {
               console.log(e);
-              router.push(`/transmission?TxHash=${e.hash}&data.amount=${data.amount}&amtSrc=-1&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
+              router.push(`/transmission?TxHash=${e.hash}&amount=${data.amount}&amtSrc=-1&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
              });
        } 
        else {

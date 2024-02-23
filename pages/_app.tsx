@@ -11,7 +11,7 @@ import {
   
 } from '@rainbow-me/rainbowkit';
 // import { useBalance } from 'wagmi/hooks';
-
+import '../styles/global.css';
 import { chain, createClient, configureChains, WagmiConfig,Chain } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
@@ -60,55 +60,6 @@ const { chains, provider, webSocketProvider } = configureChains(customChains, [
   publicProvider(),
 ]
 )
-// const { chains, provider } = configureChains(customChains, [
-//   jsonRpcProvider({
-//     url: 'https://sepolia.infura.io/v3', // This URL is required for the Ethereum Sepolia Testnet
-//   }),
-//   jsonRpcProvider({
-//     url: 'https://arbitrum-sepolia.infura.io/v3', // This URL is required for the Arbitrum Sepolia Testnet
-//   }),
-// ])
-
-// const wagmiClient = createClient({
-//   autoConnect: true,
-//   connectors: [new InjectedConnector({ chains })],
-//   provider,
-// })
-
-// const ethSepolia = {
-//   name: "Ethereum Sepolia", // Name of the custom chain
-//   rpcUrl: "https://eth-sepolia.g.alchemy.com/v2/b_u_y4r2bMnm-eyOCsCMMz16m4yseBXe", // RPC URL of the custom chain
-//   chainId: 11155111, // Chain ID of the custom chain
-//   blockExplorerUrl: "https://sepolia.etherscan.io/" // Block explorer URL of the custom chain
-// };
-
-// const arbSepolia = {
-//   name: "Arbitrum Sepolia", 
-//   rpcUrl: "https://arb-sepolia.g.alchemy.com/v2/ihk6GnlMTtUd8q3O_OdcdMDcVWuBjKSf", 
-//   chainId: 421614, 
-//   blockExplorerUrl: "https://sepolia-explorer.arbitrum.io"
-// };
-
-
-// const { chains, provider, webSocketProvider } = configureChains(
-//   [
-//     chain.goerli,
-
-//     // ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
-//     //   ? [chain.goerli]
-//     //   : []),
-
-//     arbSepolia,
-//     ethSepolia
-//   ],
-
-//   [
-//     alchemyProvider({ alchemyId: 'FGW1M0dpueWNm3_6nFCgUvOK8sGNJfoM' }),
-//     publicProvider(),
-//   ]
-// );
-
-
 
 const { wallets } = getDefaultWallets({
   appName: 'RainbowKit Mint NFT Demo',
@@ -133,7 +84,6 @@ const wagmiClient = createClient({
   provider,
   webSocketProvider,
 });
-
 function MyApp({ Component, pageProps }: AppProps) {
 const [amount,setAmount] = useState("0");
   return (
