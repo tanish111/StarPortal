@@ -25,11 +25,15 @@ function Customconnect(props) {
           chain &&
           (!authenticationStatus ||
             authenticationStatus === 'authenticated');
-
-            if(connected){
+            try{
+            if(connected && account){
               const dataContext = useDataListContext();
               dataContext.setUserBalance(parseFloat(account.displayBalance.split(" ")[0]));
             }
+          }
+          catch{
+            console.log(account)
+          }
         return (
           <div
             {...(!ready && {
