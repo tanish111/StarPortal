@@ -23,7 +23,6 @@ async function getChainId() {
   }
 }
 function SendBt() {
-  
     const data = useDataListContext();
     const { isConnected } = useConnect();
     const [sendHash,SetsendHash] = useState('');
@@ -67,7 +66,7 @@ function SendBt() {
       };
   return (
     <>
-     {(!isConnected) ? <Customconnect /> : <Button color={"white"} isDisabled={Number(data.amount)<=0} borderRadius={"3rem"} marginBottom={"1rem"} height={"10%"} width={"20%"}  backgroundColor={"black"} fontWeight={"800"} fontSize={"1.3rem"} onClick={handleSend}> Send </Button>}
+     {(!isConnected) ? <Customconnect /> : <Button color={"white"} isDisabled={(Number(data.amount)<=0 || !(data.userBalance>=data.amount))} borderRadius={"3rem"} marginBottom={"1rem"} height={"10%"} width={"20%"}  backgroundColor={"black"} fontWeight={"800"} fontSize={"1.3rem"} onClick={handleSend}> Send </Button>}
     </>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { chakra,Box,Image,Text,Button } from '@chakra-ui/react'
-
+import { useDataListContext } from './provider/DataProvider';
 function Customconnect(props) {
     const dir  = props.dir
   return (
@@ -26,6 +26,10 @@ function Customconnect(props) {
           (!authenticationStatus ||
             authenticationStatus === 'authenticated');
 
+            if(connected){
+              const dataContext = useDataListContext();
+              dataContext.setUserBalance(parseFloat(account.displayBalance.split(" ")[0]));
+            }
         return (
           <div
             {...(!ready && {
@@ -45,6 +49,7 @@ function Customconnect(props) {
                   </Button>
                 );
               }
+
 
               if (chain.unsupported) {
                 return (

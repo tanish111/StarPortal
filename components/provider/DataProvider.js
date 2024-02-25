@@ -6,8 +6,9 @@ const DataProvider = ({children}) => {
     const [amount, setAmount] = useState("0"); // Amount to send
     const [selectedSrcNetwork, setSelectedSrcNetwork] = useState(networks[0]); // Default Source network
     const [selectedDstNetwork, setSelectedDstNetwork] = useState(networks[1]); // Default Destination network
+    const [userBalance,setUserBalance] = useState(0);
     return (
-        <DataContext.Provider value={{amount,setAmount,selectedSrcNetwork,setSelectedSrcNetwork,selectedDstNetwork,setSelectedDstNetwork}}>
+        <DataContext.Provider value={{amount,setAmount,selectedSrcNetwork,setSelectedSrcNetwork,selectedDstNetwork,setSelectedDstNetwork,userBalance,setUserBalance}}>
             {children}
         </DataContext.Provider>
     )
