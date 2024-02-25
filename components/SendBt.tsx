@@ -49,7 +49,7 @@ function SendBt() {
               SetsendHash(e.hash);
               router.push(`/transmission?TxHash=${e.hash}&amount=${data.amount}&amtSrc=1&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
              }).catch((e) => {
-              window.alert(e.data.message);
+              window.alert(e.data==undefined ? "Transaction Failed" : e.data.message);
               router.push(`/transmission?TxHash=${e.hash}&amount=${data.amount}&amtSrc=-1&from=${data.selectedSrcNetwork}&to=${data.selectedDstNetwork}`);
              });
        } 

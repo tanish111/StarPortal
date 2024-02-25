@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar'
 import { TimeIcon, CheckCircleIcon, ArrowBackIcon } from '@chakra-ui/icons';
 import { color } from 'framer-motion';
 import { networkChaintologo,verifyBaseURL } from '../GlobalConts/global';
+import { useDataListContext } from '../components/provider/DataProvider';
 const TransmissionPage: React.FC = () => {
   const router = useRouter();
   const [TxHash, setTxHash] = useState('');
@@ -16,6 +17,7 @@ const TransmissionPage: React.FC = () => {
   const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
   const [isLargerThan800] = useMediaQuery('(min-width: 800px)');
   const [isLargerThan600] = useMediaQuery('(min-width: 600px)');
+  const data = useDataListContext();
   const toast = useToast();
   const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
   useEffect(() => {
@@ -49,6 +51,7 @@ const TransmissionPage: React.FC = () => {
           <Box height={"85%"} width={isLargerThan600 ? (isLargerThan800 ? (!isLargerThan1000 ? "60%" : "45%") : "75%") : "95%"} backgroundColor={"rgba(91,91,91,0.6)"} borderRadius={"2rem"} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
             <Button _hover={{ bg: "rgba(91,91,91,0.8)" }} marginTop={"1rem"} marginStart={"0.5rem"} height={"1.5rem"} width={"5%"} alignSelf={"start"} backgroundColor={"transparent"} onClick={() => {
               router.push('/')
+              data.setAmount(0);
             }}>
               <ArrowBackIcon color={"white"} />
             </Button>
@@ -95,6 +98,7 @@ const TransmissionPage: React.FC = () => {
             </Box>
             <Button margin="0.5rem" width={"auto"} height={"2rem"} backgroundColor={"rgba(0,0,0,0.5)"} color={"white"} _hover={{ bg: "rgba(0,0,0,0.7)" }} onClick={() => {
               router.push('/')
+              data.setAmount(0);
             }}>Home</Button>
           </Box>
         </Box>
